@@ -60,7 +60,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
-namespace TodoApi
+namespace {name}
 {{
     public class Startup
     {{
@@ -139,7 +139,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace TodoApi.Controllers
+namespace {name}.Controllers
 {{
     [ApiController]
     [Route(""[controller]"")]

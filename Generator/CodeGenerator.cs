@@ -8,42 +8,38 @@ namespace Generator
 {
     public class CodeGenerator
     {
-        public static void MakeFiles()
+        public static void MakeFiles(int numberOfServices)
         {
             // var services = WorkflowHelper.GetWorkflow();
-            // foreach(Service service in services){
-                // var name = Regex.Replace(service.ServiceName, @"\s+", "");
-                // Regex rgx = new Regex("[^a-zA-Z0-9 -]");
-                // name = rgx.Replace(name, "");
-                // name = char.ToUpper(name[0]) + name.Substring(1);
-
-                var name = "test";
+            for (int i = 0; i < numberOfServices; i++){
+                var name = $"Ms{i}";
                 var programFile = DotnetAppFilesGenerator.CreateProgramFile(name);
-                CreateFile("Program.cs", programFile);
+                CreateFile(name, "Program.cs", programFile);
 
                 var startupFile = DotnetAppFilesGenerator.CreateStartupFile(name);
-                CreateFile("Startup.cs", programFile);
+                CreateFile(name, "Startup.cs", programFile);
 
                 var projectFile = DotnetAppFilesGenerator.CreateProjectFile(name);
-                CreateFile("Test.csproj", projectFile);
+                CreateFile(name, $"{name}.csproj", projectFile);
 
-                Directory.CreateDirectory($"../DotnetApp/Controllers");
+                Directory.CreateDirectory($"../{i}/Controllers");
                 var controllerFile = DotnetAppFilesGenerator.CreateControllerFile(name);
-                CreateFile("Controller.cs", controllerFile);
+                CreateFile(name, "Controller.cs", controllerFile);
 
                 var appsettingsFile = DotnetAppFilesGenerator.CreateAppsettingsFile(name);
-                CreateFile("appsettings.json", appsettingsFile);
+                CreateFile(name, "appsettings.json", appsettingsFile);
 
                 var appsettingsDevFile = DotnetAppFilesGenerator.CreateAppsettingsDevFile(name);
-                CreateFile("appsettings.Development.json", appsettingsDevFile);
+                CreateFile(name, "appsettings.Development.json", appsettingsDevFile);
 
-                Directory.CreateDirectory($"../DotnetApp/Properties");
+                Directory.CreateDirectory($"../{i}/Properties");
                 var launchSettingsFile = DotnetAppFilesGenerator.CreateLaunchSettingsFile(name);
-                CreateFile("launchSettings.json", launchSettingsFile);         
+                CreateFile(name, "launchSettings.json", launchSettingsFile);     
+            }    
         }
 
-        public static void CreateFile(String name, String code){
-            using (FileStream fs = File.Create($"../DotnetApp/{name}"))
+        public static void CreateFile(String dirName, String fileName, String code){
+            using (FileStream fs = File.Create($"../{dirName}/{fileName}"))
             {
                 byte[] info = new UTF8Encoding(true).GetBytes(code);
                 fs.Write(info, 0, info.Length);
